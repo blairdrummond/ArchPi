@@ -96,8 +96,6 @@ fi
 
 
 
-
-
 echo "Using $DEVICE"
 
 # Mount Directory to avoid stupid files
@@ -134,14 +132,20 @@ else mount $DEVICE"2"  root
 fi
 
 
-
-# Fecth new install
-read -p "Fetch a fresh installation? " -n 1 -r
-echo    # (optional) move to a new line
-if [[ $REPLY =~ ^[Yy]$ ]]
+# Download and extract the root filesystem (as root, not via sudo):
+if [[ ! -f ArchLinuxARM-rpi-latest.tar.gz ]]
 then
-    # Download and extract the root filesystem (as root, not via sudo):
+    echo "Fetching installer"
     wget http://archlinuxarm.org/os/ArchLinuxARM-rpi-latest.tar.gz
+
+else
+    # Fetch new install
+    read -p "Fetch a fresh installation? " -n 1 -r
+    echo    # (optional) move to a new line
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+	wget http://archlinuxarm.org/os/ArchLinuxARM-rpi-latest.tar.gz
+    fi
 fi
 
 
