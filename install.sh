@@ -154,5 +154,9 @@ sync
 mv root/boot/* boot
 
 
+# Load files for configuration
+mv dotfiles.tar initialize.sh README.md root
+
+
 # Unmount the two partitions:
 umount boot root
