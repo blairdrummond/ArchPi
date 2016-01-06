@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 ####################################################
 ####  Install Arch for Rasberry Pi 2 on device  ####
@@ -8,10 +8,11 @@
 
 
 # Don't break anything
-echo "#########################################################"
-echo "##############      Be Very Careful!!!   ################"
-echo "#########################################################"
-echo
+echo "
+#########################################################
+##############      Be Very Careful!!!   ################
+#########################################################
+"
 
 read -p "Are you going to be careful? " -n 1 -r
 echo
@@ -60,34 +61,38 @@ then
     echo
 
     # Wipe old
-    echo "At the fdisk prompt, delete old partitions and create a new one:"
-    echo "  > o"
-    echo
-    echo " This will clear out any partitions on the drive."
-    echo
+    echo "
+      At the fdisk prompt, delete old partitions and create a new one:
+       > o
+
+      This will clear out any partitions on the drive.
+    "
 
     # First partition
-    echo "  > n           new"
-    echo "  > p           primary"
-    echo "  > 1           first partition"
-    echo "  > ENTER       to accept the default first sector, "
-    echo "  > +100M       for the last sector."
-    echo "  > t "
-    echo "  > c           to set the first partition to type W95 FAT32 (LBA)."
-    echo
+    echo  "
+       > n           new
+       > p           primary
+       > 1           first partition
+       > ENTER       to accept the default first sector,
+       > +100M       for the last sector.
+       > t
+       > c           to set the first partition to type W95 FAT32 (LBA).
+    "
 
     # Second partition
-    echo "  > n           new"
-    echo "  > p           primary"
-    echo "  > 2           second partition"
-    echo "  > ENTER       to accept the default  *first*  sector, "
-    echo "  > ENTER       to accept the default  *last*   sector, "
-    echo
+    echo "
+       > n           new
+       > p           primary
+       > 2           second partition
+       > ENTER       to accept the default  *first*  sector,
+       > ENTER       to accept the default  *last*   sector,
+    "
 
     # finish up
-    echo "Write the partition table and exit by typing:"
-    echo "  > w"
-    echo
+    echo "
+      Write the partition table and exit by typing:
+       > w
+    "
 
     # exit
     echo "After that, exit and re-run this script."
@@ -159,7 +164,7 @@ mv root/boot/* boot
 
 
 # Load files for configuration
-mv dotfiles.tar initialize.sh README.md root
+mv dotfiles.tar initialize.sh README.md plug.vim root
 
 
 # Unmount the two partitions:

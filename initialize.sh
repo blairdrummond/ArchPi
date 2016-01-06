@@ -4,8 +4,8 @@
 # take arg in { root, blair }
 case $1 in
 
-#### Root commands ####
-root)
+    #### Root commands ####
+    root)
 
 	userdel -r alarm
 	useradd blair
@@ -14,13 +14,25 @@ root)
 
 	# > visudo
 	# Now uncomment "%wheel ALL=(ALL) ALL"
-	pacman -S sudo vim rsync
+	pacman -S sudo vim rsync highlight
 
+	# Add blair to wheel
 	usermod -G10 blair
 
 	# Vim settings
-	bash -c "echo \"syntax on\"          >> /etc/vimrc"
-	bash -c "echo \"colorscheme desert\" >> /etc/vimrc"
+	# Centered-Window, Syntax Highlighting, Colour theme
+	cp plug.vim /usr/share/vim/vim74/autoload/
+	echo "
+syntax on
+colorscheme desert
+
+call plug#begin('/etc/vim/plugged')
+    Plug 'junegunn/goyo.vim'
+call plug#end()
+
+autocmd VimEnter * Goyo
+" >> /etc/vimrc
+
 
 
 	# Copy Files to /home/blair
@@ -29,17 +41,17 @@ root)
 	chmod +x /home/blair/initialize.sh
 
 	exit
-;;
+	;;
 
 
-#### User commands ####
-blair)
+    #### User commands ####
+    blair)
 
 	# Make certain that user owns their folder
 	sudo chown --recursive blair /home/blair
 
 	# Install some stuff
-	sudo pacman -S git zsh moc ranger dfc highlight alsa-utils zip unzip tmux
+	sudo pacman -S git zsh moc ranger dfc alsa-utils zip unzip tmux
 
 	# Oh-My-Zsh
 	sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
@@ -71,26 +83,27 @@ blair)
 	rm dotfiles.tar
 
 	exit
-;;
+	;;
 
 
 
-#### Help Message ####
-*)
-	echo
-	echo "This script is meant to help get an Arch Installatiion onto a Rasberry Pi"
-	echo
-	echo "The script only partially automates the process. You'll need a second terminal open."
-	echo "To manage this, it's easiest to use TMUX. Recall that "
-	echo
-	echo "To set up the install, log in as root and run:"
-	echo
-	echo "    > ./initialize.sh root"
-	echo
-	echo "Then, log out, log into blair, and then run"
-	echo
-	echo "    > ./initialize.sh blair"
-	echo
-	echo "Then everything should be running."
+    #### Help Message ####
+    *)
+	echo "
+	 This script is meant to help get an Arch Installatiion onto a Rasberry Pi
+
+	 The script only partially automates the process. You'll need a second terminal open.
+	 To manage this, it's easiest to use TMUX. Recall that
+
+	 To set up the install, log in as root and run:
+
+	     > ./initialize.sh root
+
+	 Then, log out, log into blair, and then run
+
+	     > ./initialize.sh blair
+
+	 Then everything should be running."
+
 	exit
-;;
+	;;
