@@ -19,9 +19,9 @@ It is strictly terminal based, but it's of course fairly simple to layer a full 
 
 # How to use. 
 
-To format the microsd card, run ./install.sh from a linux computer
+To format the microsd card, run ./install.sh from a linux computer (as sudo)
 
-> ./install.sh
+> sudo ./install.sh
 
 After that, plug the microsd card into the raspberry pi, and log into root and run
 

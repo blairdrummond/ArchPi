@@ -26,7 +26,7 @@ else
     exit
 fi
 
-
+lsblk
 
 # Get the device name
 if [[ $1 == "" ]]
@@ -137,20 +137,12 @@ else mount $DEVICE"2"  root
 fi
 
 
-# Download and extract the root filesystem (as root, not via sudo):
-if [[ ! -f ArchLinuxARM-rpi-latest.tar.gz ]]
+# Fetch new install
+read -p "Fetch a fresh installation? " -n 1 -r
+echo    # (optional) move to a new line
+if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    echo "Fetching installer"
     wget http://archlinuxarm.org/os/ArchLinuxARM-rpi-latest.tar.gz
-
-else
-    # Fetch new install
-    read -p "Fetch a fresh installation? " -n 1 -r
-    echo    # (optional) move to a new line
-    if [[ $REPLY =~ ^[Yy]$ ]]
-    then
-	wget http://archlinuxarm.org/os/ArchLinuxARM-rpi-latest.tar.gz
-    fi
 fi
 
 
