@@ -147,6 +147,7 @@ fi
 
 
 # Unpack files
+echo "Unpacking the install: This may take a while."
 bsdtar -xpf ArchLinuxARM-rpi-latest.tar.gz -C root
 sync
 
