@@ -149,6 +149,7 @@ fi
 # Unpack files
 echo "Unpacking the install: This may take a while."
 bsdtar -xpf ArchLinuxARM-rpi-latest.tar.gz -C root
+echo "syncing changes"
 sync
 
 
@@ -157,7 +158,7 @@ mv root/boot/* boot
 
 
 # Load files for configuration
-mv dotfiles.tar initialize.sh README.md plug.vim root
+cp dotfiles.tar initialize.sh README.md plug.vim root/root/
 
 
 # Unmount the two partitions:
