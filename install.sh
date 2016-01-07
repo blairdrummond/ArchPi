@@ -115,10 +115,10 @@ fi
 mkdir -p boot
 
 if [[ $DEVICE =~ /dev/mmcblk*  ]]
-then 
+then
     echo "mount $DEVICE\"p1\" boot"
     mount $DEVICE"p1" boot
-else 
+else
     echo "mount $DEVICE\"p1\" boot"
     mount $DEVICE"1"  boot
 fi
@@ -139,7 +139,7 @@ if [[ $DEVICE =~ /dev/mmcblk*  ]]
 then
     echo "mount $DEVICE\"p2\" root"
     mount $DEVICE"p2" root
-else 
+else
     echo "mount $DEVICE\"2\" root"
     mount $DEVICE"2"  root
 fi
@@ -153,30 +153,23 @@ then
     wget "http://archlinuxarm.org/os/ArchLinuxARM-rpi-2-latest.tar.gz"
 fi
 
-current_path=`pwd`
-
-
 # Unpack files
 echo "Unpacking the install: This may take a while."
-bsdtar -xpf ArchLinuxARM-rpi-latest.tar.gz -C root
-
+bsdtar -xpf ArchLinuxARM-rpi-2-latest.tar.gz -C root
+echo "syncing changes"
+sync
 
 # Move boot files to the first partition:
 mv root/boot/* boot
 
-cd $current_path
-
 # Load files for configuration
+echo "working driectory="
+pwd
+echo
 cp dotfiles.tar initialize.sh README.md plug.vim root/root/
-
-echo "syncing changes"
-sync
-
-
 
 
 # Unmount the two partitions:
 umount boot root
-
 
 echo "You can now eject the device"
