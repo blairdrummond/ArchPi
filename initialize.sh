@@ -23,13 +23,15 @@ case $1 in
 	echo "root password?"
 	passwd
 
+	# Grab a few basic packages (we need them for a few things)
+	pacman -S sudo vim rsync highlight git
+
 	echo
 	echo "You're going into visudo.
 Uncomment \"%wheel ALL=(ALL) ALL\""
 	pause
 	visudo
 
-	pacman -S sudo vim rsync highlight git
 
 	# Add blair to wheel
 	usermod -G10 blair
@@ -57,8 +59,12 @@ That should install Goyo system wide.
 
 	# Copy Files to /home/blair
 	mkdir -p /home/blair
-	cp intialize.sh dotfiles.tar /home/blair/
+	cp initialize.sh /home/blair/
+	cp dotfiles.tar /home/blair/
 	chmod +x /home/blair/initialize.sh
+
+	# Make certain that user owns their folder
+	chown --recursive blair /home/blair
 
 	exit
 	;;
@@ -67,15 +73,14 @@ That should install Goyo system wide.
     #### User commands ####
     blair)
 
-	# Make certain that user owns their folder
-	sudo chown --recursive blair /home/blair
-
 	# Install some stuff
-	sudo pacman -S git zsh moc ranger dfc alsa-utils zip unzip tmux
+	sudo pacman -S zsh moc ranger dfc alsa-utils zip unzip tmux
 
 	# Oh-My-Zsh
+	echo "Installing zsh. CTRL-D after it finishes (it pauses the script)"
+	pause
 	sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-	chsh -s /bin/zsh
+	# chsh -s /bin/zsh
 
 	#   # run and quit mocp
 	#   mocp

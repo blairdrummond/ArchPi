@@ -116,10 +116,10 @@ mkdir -p boot
 
 if [[ $DEVICE =~ /dev/mmcblk*  ]]
 then
-    echo "mount $DEVICE\"p1\" boot"
+    echo "mount ${DEVICE}p1 boot"
     mount $DEVICE"p1" boot
 else
-    echo "mount $DEVICE\"p1\" boot"
+    echo "mount ${DEVICE}p1 boot"
     mount $DEVICE"1"  boot
 fi
 
