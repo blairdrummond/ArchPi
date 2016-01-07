@@ -137,10 +137,10 @@ mkdir -p root
 
 if [[ $DEVICE =~ /dev/mmcblk*  ]]
 then
-    echo "mount $DEVICE\"p2\" root"
+    echo "mount ${DEVICE}p2 root"
     mount $DEVICE"p2" root
 else
-    echo "mount $DEVICE\"2\" root"
+    echo "mount ${DEVICE}2 root"
     mount $DEVICE"2"  root
 fi
 

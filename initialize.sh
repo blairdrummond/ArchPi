@@ -1,6 +1,11 @@
 # Script for Rabserry Pi 2:
 # Set up for Arch Linux
 
+
+pause(){
+ read -n1 -rsp $'Press any key to continue or Ctrl+C to exit...\n'
+}
+
 # take arg in { root, blair }
 case $1 in
 
@@ -8,13 +13,23 @@ case $1 in
     root)
 
 	userdel -r alarm
+
+	# blair
 	useradd blair
+	echo "blair's password?"
 	passwd blair
+
+	# root
+	echo "root password?"
 	passwd
 
-	# > visudo
-	# Now uncomment "%wheel ALL=(ALL) ALL"
-	pacman -S sudo vim rsync highlight
+	echo
+	echo "You're going into visudo.
+Uncomment \"%wheel ALL=(ALL) ALL\""
+	pause
+	visudo
+
+	pacman -S sudo vim rsync highlight git
 
 	# Add blair to wheel
 	usermod -G10 blair
@@ -33,11 +48,16 @@ call plug#end()
 autocmd VimEnter * Goyo
 " >> /etc/vimrc
 
+	echo "Now we're going to run vim. You need to just ignore any errors and type
 
+    > :PlugInstall
+
+That should install Goyo system wide.
+"
 
 	# Copy Files to /home/blair
 	mkdir -p /home/blair
-	cp inintialize.sh dotfiles.tar /home/blair/
+	cp intialize.sh dotfiles.tar /home/blair/
 	chmod +x /home/blair/initialize.sh
 
 	exit
@@ -107,3 +127,4 @@ autocmd VimEnter * Goyo
 
 	exit
 	;;
+esac
