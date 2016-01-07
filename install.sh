@@ -103,9 +103,9 @@ fi
 
 echo "Using $DEVICE"
 
-# Mount Directory to avoid stupid files
-mkdir -p ~/RasberryPi
-cd ~/RasberryPi/
+#   # Mount Directory to avoid stupid files
+#   mkdir -p ~/RasberryPi
+#   cd ~/RasberryPi/
 
 if [[ $DEVICE =~ /dev/mmcblk*  ]]
 then mkfs.vfat $DEVICE"p1"
@@ -115,8 +115,12 @@ fi
 mkdir -p boot
 
 if [[ $DEVICE =~ /dev/mmcblk*  ]]
-then mount $DEVICE"p1" boot
-else mount $DEVICE"1"  boot
+then 
+    echo "mount $DEVICE\"p1\" boot"
+    mount $DEVICE"p1" boot
+else 
+    echo "mount $DEVICE\"p1\" boot"
+    mount $DEVICE"1"  boot
 fi
 
 
@@ -132,8 +136,12 @@ fi
 mkdir -p root
 
 if [[ $DEVICE =~ /dev/mmcblk*  ]]
-then mount $DEVICE"p2" root
-else mount $DEVICE"2"  root
+then
+    echo "mount $DEVICE\"p2\" root"
+    mount $DEVICE"p2" root
+else 
+    echo "mount $DEVICE\"2\" root"
+    mount $DEVICE"2"  root
 fi
 
 
@@ -142,24 +150,33 @@ read -p "Fetch a fresh installation? " -n 1 -r
 echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    wget http://archlinuxarm.org/os/ArchLinuxARM-rpi-latest.tar.gz
+    wget "http://archlinuxarm.org/os/ArchLinuxARM-rpi-2-latest.tar.gz"
 fi
+
+current_path=`pwd`
 
 
 # Unpack files
 echo "Unpacking the install: This may take a while."
 bsdtar -xpf ArchLinuxARM-rpi-latest.tar.gz -C root
-echo "syncing changes"
-sync
 
 
 # Move boot files to the first partition:
 mv root/boot/* boot
 
+cd $current_path
 
 # Load files for configuration
 cp dotfiles.tar initialize.sh README.md plug.vim root/root/
 
+echo "syncing changes"
+sync
+
+
+
 
 # Unmount the two partitions:
 umount boot root
+
+
+echo "You can now eject the device"
