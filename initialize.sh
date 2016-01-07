@@ -80,16 +80,10 @@ That should install Goyo system wide.
 	echo "Installing zsh. CTRL-D after it finishes (it pauses the script)"
 	pause
 	sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-	# chsh -s /bin/zsh
 
-	#   # run and quit mocp
-	#   mocp
-
-	#   # Fix the theme
-	#   cp /usr/share/doc/config.example/ ~/.moc/config
-
-	#   # Search for "Theme" and change it to "green_theme"
-	#   amixer sset Master unmute
+	#Audio
+	sudo gpasswd -a blair audio
+	amixer sset Master unmute
 
 	#   These might not be needed
 	#   sudo pacman -S pulseaudio pulseaudio-alsa
@@ -99,9 +93,9 @@ That should install Goyo system wide.
 	sudo modprobe snd_bcm2835
 	sudo amixer cset numid=3 1
 
-	# To get audio out of the hdmi port
-	sudo modprobe snd_bcm2835
-	sudo amixer cset numid=3 0
+	#   # To get audio out of the hdmi port
+	#   sudo modprobe snd_bcm2835
+	#   sudo amixer cset numid=3 0
 
 	# unpack dotfiles
 	tar -xf dotfiles.tar
