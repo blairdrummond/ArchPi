@@ -101,6 +101,10 @@ That should install Goyo system wide.
 	tar -xf dotfiles.tar
 	rm dotfiles.tar
 
+	# Locale
+	sudo localectl set-locale LANG=en_US.UTF-8
+	export LANG=en_US.UTF-8
+
 	exit
 	;;
 
