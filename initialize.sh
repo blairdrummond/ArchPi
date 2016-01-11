@@ -6,6 +6,35 @@ pause(){
  read -n1 -rsp $'Press any key to continue or Ctrl+C to exit...\n'
 }
 
+# Uncomment stuff from a file
+function uncomment () {
+
+    if [[ $1 == "--file" && $3 == "--pattern" ]]; then
+	grep   "^#$4" $2
+	sed -i "/$4/s/^#//g" $2
+
+    elif [[ $1 == "--pattern" && $3 == "--file" ]]; then
+	grep   "^#$2" $4
+	sed -i "/$2/s/^#//g" $4
+
+    else
+	echo "uncomment pattern in file
+
+Usage:
+
+    > uncomment --file <file>      --pattern <string>
+
+		or
+
+    > uncomment --pattern <string> --file <file>
+
+"
+	exit
+    fi
+}
+
+
+
 # take arg in { root, blair }
 case $1 in
 
@@ -26,12 +55,8 @@ case $1 in
 	# Grab a few basic packages (we need them for a few things)
 	pacman -S sudo vim rsync highlight git
 
-	echo
-	echo "You're going into visudo.
-Uncomment \"%wheel ALL=(ALL) ALL\""
-	pause
-	visudo
-
+	#Give permissions to wheel
+	sudo uncomment --pattern "%wheel ALL=(ALL) ALL" --file /etc/sudoers
 
 	# Add blair to wheel
 	usermod -G10 blair
